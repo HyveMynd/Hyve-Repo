@@ -3,35 +3,64 @@
  */
 "use strict";
 
-var assert = require('assert');
 var _ = require('underscore');
 var Repository = require('./repository');
+var Promise = require('bluebird');
+var util = require('util');
 
 var types = [{ name: 'orientdb', strategy: 'OrientDbStrategy'}];
 
 /**
- * Create a repository with the given arguments. If a type argument is passed, a new repository will be returned using a default strategy.
- * @param args {tableName: STRING, strategy: STRATEGY, type: STRING}
- * @returns {Repository}
+ * Allows for the creation of repositories and default strategies.
+ * @returns {HyveRepo}
  * @constructor
  */
-var HyveRepo = function(args){
+var HyveRepo = function(){
 
-    assert.ok(!!args.tableName, 'Table name must be defined');
+    var repo = {};
 
-    if (!!args.type){
-        var foundType = _.first(types, function (type) {
-            return type.name === type
+    /**
+     * Create a repository for the tableName and uses the strategy given.
+     * @param tableName string representing the table/document name
+     * @param strategy A strategy following the repository api
+     * @returns {bluebird} A bluebird promise containing the created repository.
+     */
+    repo.createRepository = function (tableName, strategy) {
+        return new Promise(function (resolve, reject) {
+            if (!tableName){
+                return reject(new Error('Table name is invalid'));
+            }
+            if (!strategy){
+                return reject(new Error('Strategy must be defined'));
+            }
+            return resolve(new Repository(tableName, strategy));
         });
+    };
 
-        if (foundType !== null){
-            var strategy = require('./strategies/' + foundType.strategy);
-            return new Repository(args.tableName, strategy);
-        }
-    }
+    /**
+     * Get a default strategy of the given type
+     * @param type a string representing the name of the strategy.
+     * @returns {bluebird} A bluebird promise containing the resolved strategy.
+     */
+    repo.getStrategy = function (type) {
+        return new Promise(function (resolve, reject) {
+            if (!type){
+                return reject(new Error('Type must be a valid string'));
+            }
 
-    assert.ok(args.strategy, 'A strategy must be defined');
-    return new Repository(args.tableName, args.strategy);
+            var foundType = _.find(types, function (type) {
+                return type.name === type.name;
+            });
+
+            if (!foundType){
+                return reject(new Error(util.format('Default strategy of type %s not found.', type)));
+            }
+
+            return resolve(require('./strategies/' + foundType.strategy));
+        });
+    };
+
+    return repo;
 };
 
-module.exports = HyveRepo;
+module.exports = new HyveRepo();

@@ -1,6 +1,6 @@
 {
   "name": "hyve-repo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "An easy to use repository pattern for interacting with any database using a functional api.",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,22 @@
     "users"
   ],
   "author": "HyveMynd",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HyveMynd/Hyve-Repo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HyveMynd/Hyve-Repo/issues"
+  },
+  "homepage": "https://github.com/HyveMynd/Hyve-Repo",
+  "dependencies": {
+    "bluebird": "^2.9.13",
+    "oriento": "^1.1.3",
+    "underscore": "^1.8.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "should": "^5.1.0"
+  }
 }

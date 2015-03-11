@@ -5,7 +5,6 @@
 
 var _ = require('underscore');
 var Repository = require('./repository');
-var Promise = require('bluebird');
 var util = require('util');
 
 var types = [{ name: 'orientdb', strategy: 'OrientDbStrategy'}];
@@ -26,15 +25,13 @@ var HyveRepo = function(){
      * @returns {bluebird} A bluebird promise containing the created repository.
      */
     repo.createRepository = function (tableName, strategy) {
-        return new Promise(function (resolve, reject) {
-            if (!tableName){
-                return reject(new Error('Table name is invalid'));
-            }
-            if (!strategy){
-                return reject(new Error('Strategy must be defined'));
-            }
-            return resolve(new Repository(tableName, strategy));
-        });
+        if (!tableName){
+            throw new Error('Table name is invalid');
+        }
+        if (!strategy){
+            throw new Error('Strategy must be defined');
+        }
+        return new Repository(tableName, strategy);
     };
 
     /**
@@ -43,21 +40,19 @@ var HyveRepo = function(){
      * @returns {bluebird} A bluebird promise containing the resolved strategy.
      */
     repo.getStrategy = function (type) {
-        return new Promise(function (resolve, reject) {
-            if (!type){
-                return reject(new Error('Type must be a valid string'));
-            }
+        if (!type){
+            throw new Error('Type must be a valid string');
+        }
 
-            var foundType = _.find(types, function (type) {
-                return type.name === type.name;
-            });
-
-            if (!foundType){
-                return reject(new Error(util.format('Default strategy of type %s not found.', type)));
-            }
-
-            return resolve(require('./strategies/' + foundType.strategy));
+        var foundType = _.find(types, function (type) {
+            return type.name === type.name;
         });
+
+        if (!foundType){
+            throw new Error(util.format('Default strategy of type %s not found.', type));
+        }
+
+        return require('./strategies/' + foundType.strategy);
     };
 
     return repo;

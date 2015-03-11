@@ -11,11 +11,8 @@ describe("Api", function(){
     describe("creates a repository", function(){
         var repo = {};
 
-        before(function (done) {
-            HyveRepo.createRepository('test-table', new OrientStrategy('localhost', '2424', 'root', 'password', 'GratefulDeadConcerts')).then(function (repository) {
-                repo = repository;
-                done();
-            }).done();
+        before(function () {
+            repo = HyveRepo.createRepository('test-table', new OrientStrategy('localhost', '2424', 'root', 'password', 'GratefulDeadConcerts'));
         });
 
         it("is created", function () {
@@ -26,11 +23,8 @@ describe("Api", function(){
     describe("get the orientDb strategy", function(){
         var strat = {};
 
-        before(function (done) {
-            HyveRepo.getStrategy('orientdb').then(function (strategy) {
-                strat = strategy;
-                done();
-            }).done();
+        before(function () {
+            strat = HyveRepo.getStrategy('orientdb');
         });
 
         it("is created", function () {

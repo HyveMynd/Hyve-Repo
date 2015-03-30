@@ -63,7 +63,7 @@ var OrientoStrategy = function(host, port, username, password, databaseName){
     };
 
     strategy.any = function (className, predicate) {
-        return db.select().from(className).where(predicate).any()
+        return db.select().from(className).or(predicate).all()
     };
 
     strategy.raw = function () {

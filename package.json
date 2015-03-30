@@ -1,6 +1,6 @@
 {
   "name": "hyve-repo",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "An easy to use repository pattern for interacting with any database using a functional api.",
   "main": "index.js",
   "scripts": {

@@ -62,6 +62,10 @@ var OrientoStrategy = function(host, port, username, password, databaseName){
         return db.query('delete from ' + className);
     };
 
+    strategy.any = function (className, predicate) {
+        return db.select().from(className).where(predicate).any()
+    };
+
     strategy.raw = function () {
         return db;
     };

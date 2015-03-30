@@ -32,6 +32,7 @@ var Repository = function(tableName, strategy) {
     assert.ok(repo.strategy.remove, 'Delete function must be defined');
     assert.ok(repo.strategy.find, 'Find function must be defined');
     assert.ok(repo.strategy.where, 'Where function must be defined');
+    assert.ok(repo.strategy.any, 'Any function must be defined');
     assert.ok(repo.strategy.all, 'All function must be defined');
     assert.ok(repo.strategy.first, 'First function must be defined');
     assert.ok(repo.strategy.clear, 'Clear function must be defined');
@@ -140,6 +141,17 @@ var Repository = function(tableName, strategy) {
                 return reject(new Error('Install function is not defined.'));
             }
         });
+    };
+
+    /**
+     * Returns a list of objects which match any fields defined in the predicate
+     * @param predicate
+     * @returns {Promise}
+     */
+    repo.any = function (predicate) {
+        return new Promise(function (resolve) {
+            return resolve(repo.strategy.any(repo.tableName, predicate))
+        })
     };
 
     return repo;

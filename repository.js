@@ -147,7 +147,7 @@ var Repository = function(tableName, strategy) {
      * @returns {Object}
      */
     repo.raw = function () {
-        return resolve(repo.strategy.raw())
+        return repo.strategy.raw()
     };
 
     return repo;

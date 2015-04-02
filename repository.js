@@ -144,13 +144,13 @@ var Repository = function(tableName, strategy) {
     };
 
     /**
-     * Returns a list of objects which match any fields defined in the predicate
+     * Returns the backing database object for raw query use.
      * @param predicate
      * @returns {Promise}
      */
-    repo.any = function (predicate) {
+    repo.raw = function () {
         return new Promise(function (resolve) {
-            return resolve(repo.strategy.any(repo.tableName, predicate))
+            return resolve(repo.strategy.raw())
         })
     };
 

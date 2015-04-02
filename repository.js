@@ -32,7 +32,6 @@ var Repository = function(tableName, strategy) {
     assert.ok(repo.strategy.remove, 'Delete function must be defined');
     assert.ok(repo.strategy.find, 'Find function must be defined');
     assert.ok(repo.strategy.where, 'Where function must be defined');
-    assert.ok(repo.strategy.any, 'Any function must be defined');
     assert.ok(repo.strategy.all, 'All function must be defined');
     assert.ok(repo.strategy.first, 'First function must be defined');
     assert.ok(repo.strategy.clear, 'Clear function must be defined');

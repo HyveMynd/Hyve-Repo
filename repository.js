@@ -144,13 +144,10 @@ var Repository = function(tableName, strategy) {
 
     /**
      * Returns the backing database object for raw query use.
-     * @param predicate
-     * @returns {Promise}
+     * @returns {Object}
      */
     repo.raw = function () {
-        return new Promise(function (resolve) {
-            return resolve(repo.strategy.raw())
-        })
+        return resolve(repo.strategy.raw())
     };
 
     return repo;
